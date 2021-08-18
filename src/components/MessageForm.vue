@@ -1,30 +1,15 @@
 <template>
-  <div class="form-container mt-3" ref="form">
-    <v-divider></v-divider>
-    <div class="message-form pa-3">
+  <div class="form-container mt-5" ref="form">
+    <div class="message-form flex-grow-1 pa-2 pa-md-3 d-flex align-center flex-wrap">
       <v-expand-transition>
-        <div class="d-flex align-start text-caption" v-if="isEditing">
+        <div class="d-flex align-start text-caption edit-notify flex-grow-1" v-if="isEditing">
           <span>Pедактирование</span>
           <v-btn class="ml-2" @click="cancel" x-small icon>
             <v-icon color="red">mdi-close</v-icon>
           </v-btn>
         </div>
       </v-expand-transition>
-      <div class="d-flex align-center">
-        <v-textarea
-          ref="messageInput"
-          @keyup.ctrl.enter="handleSubmit"
-          hide-details
-          no-resize
-          rows="2"
-          placeholder="Сообщение"
-          v-model="body"
-          color="deep-purple"
-          dense
-          class="flex-grow-1"
-        >
-        </v-textarea>
-        <div class="relative ml-2">
+      <div class="relative">
           <v-icon color="amber" @click="showSmiles = true" x-large>
             mdi-emoticon
           </v-icon>
@@ -41,6 +26,20 @@
             />
           </v-expand-transition>
         </div>
+      <div class="d-flex align-center flex-grow-1 ml-2">
+        <v-textarea
+          ref="messageInput"
+          @keyup.ctrl.enter="handleSubmit"
+          hide-details
+          no-resize
+          rows="2"
+          placeholder="Сообщение"
+          v-model="body"
+          color="deep-purple"
+          dense
+          class="flex-grow-1"
+        >
+        </v-textarea>
         <v-btn
           class="ml-2"
           icon
@@ -96,6 +95,7 @@ export default {
 .<style lang="sass">
 .message-form
   background: white
+  min-height: $message-input-height
 
 .emoji
   display: flex !important
@@ -104,18 +104,25 @@ export default {
 
 .emoji-picker
   position: absolute
-  top: -12px
-  left: 50%
-  transform: translate(-50%, -100%)
-  max-width: 240px
+  top: -20px
+  left: -8px
+  transform: translateY(-100%)
   z-index: 10
+  max-width: 300px
 
 .form-container
   background: map-get($material-light, "background")
   position: sticky
   bottom: 0
-  z-index: 2
+  z-index: 5
   width: 100%
   max-width: inherit
+  border-top: 1px solid rgb(224, 224, 224)
+
+.edit-notify
+  flex-basis: 100%
+
+#Categories > .category
+  padding: 5px 2px
 </style>
 

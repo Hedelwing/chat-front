@@ -76,6 +76,7 @@ import CancelFriendship from "../graphql/CancelFriendship";
 import friends from "../graphql/Friends";
 import AppLayot from "../components/AppLayot.vue";
 import ConfirmAction from "../components/ConfirmAction.vue";
+import { setIn, updateStore } from "../utils";
 
 export default {
   data() {
@@ -101,7 +102,7 @@ export default {
     acceptRemoving() {
       this.removeDialog = false;
       this.cancelFriendship();
-      this.friendsModel = []
+      this.friendsModel = [];
     },
     createChat() {
       this.$apollo
@@ -129,17 +130,17 @@ export default {
         variables: {
           ids: this.friendsModel,
         },
-        update(store, { data: { cancelFriendship } }) {
-          const data = store.readQuery({ query: friends });
+        update(store, { data }) {
+          const updateFriends = (data, { cancelFriendship }) =>
+            setIn(
+              data,
+              "friends",
+              data.friends.filter(
+                (friend) => !cancelFriendship.includes(friend.id)
+              )
+            );
 
-          const filteredFriends = data.friends.filter(
-            (friend) => !cancelFriendship.includes(friend.id)
-          );
-
-          store.writeQuery({
-            query: friends,
-            data: { friends: filteredFriends },
-          });
+          updateStore(store, { query: friends }, data, updateFriends);
         },
       });
     },

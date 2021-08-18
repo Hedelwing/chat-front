@@ -2,13 +2,7 @@
   <div v-if="me" class="d-flex align-center pa-3">
     <div class="relative">
       <avatar :image="me.avatar" :text="me.nickname"></avatar>
-      <v-btn
-        class="white"
-        @click="isOpen = true"
-        x-small
-        icon
-        style="position: absolute; bottom: 0; right: 0"
-      >
+      <v-btn class="white edit-control" @click="isOpen = true" x-small icon>
         <v-icon color="black">mdi-lead-pencil</v-icon>
       </v-btn>
     </div>
@@ -32,10 +26,7 @@
         :class="{ 'green lighten-5': dragEntered }"
       >
         <div v-if="!imageSrc" class="pa-1">
-          <div
-            class="d-flex flex-column align-center pa-5"
-            style="border: 2px dashed green"
-          >
+          <div class="d-flex drag-box flex-column align-center pa-5">
             <div v-show="error" class="text--center text-caption mb-5">
               <v-icon color="red">mdi-alert</v-icon>
               <span class="ml-2">{{ error }}</span>
@@ -211,4 +202,12 @@ export default {
 <style lang="sass">
 .vue-advanced-cropper__background, .vue-advanced-cropper__foreground
   background: white
+
+.drag-box
+  border: 2px dashed green
+
+.edit-control
+  position: absolute
+  bottom: 0
+  right: 0
 </style>

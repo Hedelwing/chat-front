@@ -1,7 +1,7 @@
 <template>
   <app-layot>
     <template v-slot:header>
-      <v-btn class="mr-auto" @click="$router.go(-1)" plain>
+      <v-btn class="mr-auto" @click="$router.push('/chats')" plain>
         <v-icon left> mdi-arrow-left </v-icon>
         Назад
       </v-btn>
@@ -144,9 +144,6 @@ export default {
   methods: {
     setUpdatingMessage(id) {
       this.editingMessage = this.chat.messages.find((msg) => msg.id === id);
-    },
-    updateInputFormHeight(height) {
-      this.inputFormHeight = height;
     },
     sendMessage(body) {
       this.$apollo.mutate({
@@ -342,7 +339,8 @@ export default {
 
 <style lang="sass">
 .scroll-btn
-  bottom: 96px
+  bottom: $message-input-height + 24px
   position: fixed
   transform: translateX(-100%)
+  z-index: 100
 </style>
